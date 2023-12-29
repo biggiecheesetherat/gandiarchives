@@ -1,3 +1,5 @@
+/* Grabbed from https://static.xiguacity.cn/h1t86b7fg6c7k36wnt0cb30m/static/js/gandi_ccw_mmo.c3bafdaf.js */
+
 /*! For license information please see gandi_ccw_mmo.c3bafdaf.js.LICENSE.txt */
 "use strict";
 (self.webpackChunkscratch_extensions = self.webpackChunkscratch_extensions || []).push([[5825], {
