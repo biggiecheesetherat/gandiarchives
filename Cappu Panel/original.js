@@ -1,3 +1,5 @@
+/* Grabbed from https://static.xiguacity.cn/h1t86b7fg6c7k36wnt0cb30m/static/js/ccw_cappu_panel.54bf71d4.js */
+
 "use strict";
 (self.webpackChunkscratch_extensions = self.webpackChunkscratch_extensions || []).push([[4213], {
     6969: (e,t,o)=>{
