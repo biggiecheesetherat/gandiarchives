@@ -27,7 +27,7 @@
     /**
      * @param {VM.RenderedTarget} target
      * @param {VM.RenderedTarget} [originalTarget] If target is a clone, the original to copy from.
-     */
+     
     const implementStretchForTarget = (target, originalTarget) => {
       if (STRETCH_X in target) {
         // Target already has stretch. Don't implement again.
@@ -49,6 +49,7 @@
     runtime.on('PROJECT_LOADED', () => {
       runtime.targets.forEach((target) => implementStretchForTarget(target));
     });
+  **/
   };
 
   /**
@@ -106,67 +107,69 @@
             blockType: Scratch.BlockType.REPORTER,
             text: this.fm('setStretch'),
             arguments: {
-              Y: {
+              ext: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 100,
+                menu: 'EXTLIST',
+                defaultValue: "choose extension..",
               },
             }
           },
         ],
+        menus: {
+            EXTLIST: {
+              acceptReporters: true,
+              items: "getExtList"
+            }
+        }
       };
     }
 
     extUri(args, util) {
-      const x = Scratch.Cast.toNumber(args.X);
-      const y = Scratch.Cast.toNumber(args.Y);
-      if (util.target[STRETCH_X] !== x || util.target[STRETCH_Y] !== y) {
-        util.target[STRETCH_X] = x;
-        util.target[STRETCH_Y] = y;
-        forceUpdateDirectionAndScale(util.target);
+      if(args.ext == "choose extension.."){
+        return "Choose a extension from the dropdown!"
+      } else {
+        vm.runtime["ext_" + args.ext]
       }
     }
 
-    changeStretch(args, util) {
-      const dx = Scratch.Cast.toNumber(args.DX);
-      const dy = Scratch.Cast.toNumber(args.DY);
-      if (dx !== 0 || dy !== 0) {
-        util.target[STRETCH_X] += dx;
-        util.target[STRETCH_Y] += dy;
-        forceUpdateDirectionAndScale(util.target);
-      }
+    getExtList()  {
+        return Array.from(vm.extensionManager._loadedExtensions.keys()); 
     }
 
-  // Scratch.extensions.register(new Stretch());
-  window.tempExt = {
-    Extension: GandiExt,
-    info: {
-      name: `${extensionId}.extensionName`,
-      description: `${extensionId}.description`,
-      extensionId,
-      iconURL: cover,
-      insetIconURL: icon,
-      featured: false,
-      disabled: false,
-      // docsURI: 'https://learn.ccw.site/article/?',
-      collaborator: 'Themeatly2',
-      collaboratorList: [
-        {
+  if(window.location.host = "cocrea.world"){
+    window.tempExt = {
+        Extension: GandiExt,
+        info: {
+          name: `${extensionId}.extensionName`,
+          description: `${extensionId}.description`,
+          extensionId,
+          iconURL: cover,
+          insetIconURL: icon,
+          featured: false,
+          disabled: false,
+          // docsURI: 'https://learn.ccw.site/article/?',
           collaborator: 'Themeatly2',
-          collaboratorURL:
-          'https://guns.lol/themeatly2',
+          collaboratorList: [
+            {
+              collaborator: 'Themeatly2',
+              collaboratorURL:
+              'https://guns.lol/themeatly2',
+            },
+          ],
         },
-      ],
-    },
-    // ['Gandi 扩展工具', 'Gandi Extension Tools']
-    l10n: {
-      'zh-cn': {
-        [`${extensionId}.extensionName`]: 'Gandi 扩展工具',
-        [`${extensionId}.description`]: '✨ 简单的包装扩展工具！',
-      },
-      en: {
-        [`${extensionId}.extensionName`]: 'Gandi Extension Tools',
-        [`${extensionId}.description`]: '✨ Easy extension tools for Packaging!',
-      },
-    },
-  };
+        // ['Gandi 扩展工具', 'Gandi Extension Tools']
+        l10n: {
+          'zh-cn': {
+            [`${extensionId}.extensionName`]: 'Gandi 扩展工具',
+            [`${extensionId}.description`]: '✨ 简单的包装扩展工具！',
+          },
+          en: {
+            [`${extensionId}.extensionName`]: 'Gandi Extension Tools',
+            [`${extensionId}.description`]: '✨ Easy extension tools for Packaging!',
+          },
+        },
+      };
+  } else {
+    Scratch.extensions.register(new GandiExt());
+  }
 }(window.Scratch));
