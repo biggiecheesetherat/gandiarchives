@@ -70,7 +70,7 @@
         //   'https://getgandi.com/extensions/',
         // ],
 
-        extUri: ['从扩展获取数据 uri： [Y]', 'get data uri from extension: [Y]']
+        extUri: ['从扩展获取数据 uri： [ext]', 'get data uri from extension: [ext]']
 
       });
     }
